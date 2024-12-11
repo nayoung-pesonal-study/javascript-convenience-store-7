@@ -1,0 +1,25 @@
+export const DEFINITION = {
+  DELIMITER: {
+    COMMA: ',',
+  },
+  CONDITION: {
+    RANDOM_NUMBER_MINIMUM: 0,
+    RANDOM_NUMBER_MAXIMUM: 9,
+    MINIMUM_ADVANCE: 4,
+  },
+  SYMBOL: {
+    ADVANCE: '-',
+  },
+  VALID_TRUE_INPUT: 'Y',
+  VALID_FALSE_INPUT: 'N',
+  VALID_TRUE_OR_FALSE: ['Y', 'N'],
+
+  VALID_EDGE_START: '[',
+  VALID_EDGE_END: ']',
+
+  MAX: {
+    ARRAY_LENGTH: 6,
+    STRING_LENGTH: 5,
+    NUMBER: 10000,
+  },
+};
