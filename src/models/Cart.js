@@ -50,10 +50,8 @@ class Cart {
     });
   }
 
-  calculateTotalPayment() {
-    this.#purchaseList.map((product) => {
-      Calculator.calculateTotalPayment();
-    });
+  calculateTotalPayment(isMembership) {
+    return Calculator.calculateTotalPayment(this.#purchaseList, isMembership);
   }
 
   test(string, delimiter) {

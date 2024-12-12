@@ -10,30 +10,36 @@ class MainController {
   async start() {
     const stock = new Stock();
     await stock.initStock();
-    const stockMessage = await stock.messageStockState();
 
-    OutputController.printStartTitle();
-    OutputController.printCurrentStock(stockMessage);
+    let isContinue = true;
 
-    const purchaseAmount = await this.inputPurchaseAmount(stock);
-    // purchaseAmount => List<product{name: '사이다', quantity: 3}>
+    while (isContinue) {
+      OutputController.printStartTitle();
+      const stockMessage = await stock.messageStockState();
+      OutputController.printCurrentStock(stockMessage);
 
-    const cart = new Cart();
-    cart.addCart(purchaseAmount);
-    cart.splitPromotionAndGenral(stock);
+      const purchaseAmount = await this.inputPurchaseAmount(stock);
+      // purchaseAmount => List<product{name: '사이다', quantity: 3}>
 
-    // 보너스 계산
-    cart.calculatePurchaseListBonus(stock);
+      const cart = new Cart();
+      cart.addCart(purchaseAmount);
+      cart.splitPromotionAndGenral(stock);
 
-    // 최종 장바구니 목록을 재고에서 차감
-    cart.subtractPurchaseListInStock(stock);
+      // 보너스 계산
+      cart.calculatePurchaseListBonus(stock);
 
-    console.log('getPurchaseList', cart.getPurchaseList());
+      const isMembership = await InputController.inputMembership();
+      const totalPayment = cart.calculateTotalPayment(isMembership);
+      OutputController.printReciept(totalPayment);
+      // 최종 장바구니 목록을 재고에서 차감
+      cart.subtractPurchaseListInStock(stock);
 
-    console.log('재고차감 후 재고 목록', stock.getter());
-    OutputController.printReciept();
-    // const inputPurchaseData = await this.inputPurchase();
-    // MissionUtils.Console.print(inputPurchaseData);
+      console.log('getPurchaseList', cart.getPurchaseList());
+
+      // const inputPurchaseData = await this.inputPurchase();
+      // MissionUtils.Console.print(inputPurchaseData);
+      isContinue = await InputController.inputContinuePurchase();
+    }
   }
 
   // InputController
@@ -50,7 +56,7 @@ class MainController {
       });
       return purchaseAmount;
     } catch (error) {
-      MissionUtils.Console.print(error);
+      MissionUtils.Console.print(error.message);
       return await this.inputPurchaseAmount(stock);
     }
   }

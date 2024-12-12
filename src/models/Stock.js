@@ -42,7 +42,9 @@ class Stock {
       .filter((product) => product.name === name)
       .reduce((acc, cur) => acc + cur.quantity, 0);
     if (possibleAmount < quantity) {
-      throw new Error('[ERROR] 구매가능한 수량을 초과하였습니다.');
+      throw new Error(
+        '[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.',
+      );
     }
   }
 

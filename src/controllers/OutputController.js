@@ -13,7 +13,7 @@ class OutputController {
   }
 
   // products = <payment{name, price, quantity, promotion, bonus}>
-  static printReciept() {
+  static printReciept(totalPayment) {
     // <[name, quantity, price]> 온다 치면,
     const products = [
       {
@@ -41,6 +41,7 @@ class OutputController {
       MissionUtils.Console.print(`${name}${quantity}${price}`);
     });
     MissionUtils.Console.print('=============증 정===============');
+    MissionUtils.Console.print(`내실 돈\n${totalPayment}`);
   }
 }
 
