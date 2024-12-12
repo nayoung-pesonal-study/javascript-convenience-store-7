@@ -4,10 +4,11 @@ import { Parser } from '../utils/Parser.js';
 import InputView from '../views/InputView.js';
 
 class InputController {
-  static async inputNumber() {
+  static async inputPurchaseAmount() {
     try {
-      const inputNumberString = await InputView.inputNumberView();
-      return inputNumberString;
+      const purchaseAmount = await InputView.inputPurchaseAmountView();
+
+      return purchaseAmount;
     } catch (error) {
       MissionUtils.Console.print(error);
       return await this.inputNumber();

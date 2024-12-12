@@ -2,11 +2,25 @@ import { MissionUtils } from '@woowacourse/mission-utils';
 import { MESSAGE } from '../constants/Message.js';
 import { Parser } from '../utils/Parser.js';
 
+function parseInputPurchaseAmountView(inputPurchaseAmount) {
+  const splitedPurchaseAmount = Parser.splitStringToArray(
+    inputPurchaseAmount,
+    ',',
+  );
+  const parsedPurchaseAmountList = splitedPurchaseAmount.map((purchase) => {
+    const purchaseContent = Parser.cutStringEdge(purchase);
+    const [name, quantity] = Parser.splitStringToArray(purchaseContent, '-');
+    return { name: name, quantity: quantity };
+  });
+  return parsedPurchaseAmountList;
+}
+
 class InputView {
-  static async inputNumberView() {
-    const inputNumberString =
-      await MissionUtils.Console.readLineAsync('숫자를 입력하세요.');
-    return Parser.parseToNumber(inputNumberString);
+  static async inputPurchaseAmountView() {
+    const inputPurchaseAmount = await MissionUtils.Console.readLineAsync(
+      MESSAGE.INPUT.PURCHASE_AMOUNT,
+    );
+    return parseInputPurchaseAmountView(inputPurchaseAmount);
   }
 
   static async inputBooleanView() {

@@ -9,7 +9,7 @@ const loadFile = async (filePath) => {
 const loadProduct = async () => {
   const productLines = await loadFile('public/products.md');
   const products = productLines.map((line) => {
-    const contentArray = Parser.splitStringToArray(line);
+    const contentArray = Parser.splitStringToArray(line, ',');
     const [name, price, quantity, promotion] = contentArray;
     return generateProductModel(name, price, quantity, promotion);
   });

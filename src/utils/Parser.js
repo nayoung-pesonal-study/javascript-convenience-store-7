@@ -2,8 +2,8 @@ import { DEFINITION } from '../constants/Definition.js';
 import { Validator } from './Validator.js';
 
 export const Parser = {
-  splitStringToArray: (string) => {
-    const splitedInput = string.split(DEFINITION.DELIMITER.COMMA); // Definition.js 파일에 정의된 DELIMITER.COMMA 구분자로 스플릿
+  splitStringToArray: (string, delimiter) => {
+    const splitedInput = string.split(delimiter); // Definition.js 파일에 정의된 DELIMITER.COMMA 구분자로 스플릿
     const trimArray = Parser.trimArrayElement(splitedInput);
 
     return trimArray;

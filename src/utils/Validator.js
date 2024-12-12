@@ -72,4 +72,9 @@ export const Validator = {
       );
     }
   },
+  isFalseThrowError: (boolean, message) => {
+    if (!boolean) {
+      throw new Error(message);
+    }
+  },
 };

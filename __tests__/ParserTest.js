@@ -4,7 +4,7 @@ import { Parser } from '../src/utils/Parser.js';
 describe('utils/Parser 의 테스트', () => {
   test('splitStringToArray() 테스트', () => {
     const input = ' nayoung , rang, soojin ';
-    const result = Parser.splitStringToArray(input);
+    const result = Parser.splitStringToArray(input, ',');
     expect(result).toEqual(['nayoung', 'rang', 'soojin']);
   });
 
