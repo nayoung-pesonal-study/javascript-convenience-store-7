@@ -21,10 +21,15 @@ class MainController {
     const cart = new Cart();
     cart.addCart(purchaseAmount);
     cart.splitPromotionAndGenral(stock);
-    console.log('getPurchaseList', cart.getPurchaseList());
+
+    // 보너스 계산
+    cart.calculatePurchaseListBonus(stock);
 
     // 최종 장바구니 목록을 재고에서 차감
     cart.subtractPurchaseListInStock(stock);
+
+    console.log('getPurchaseList', cart.getPurchaseList());
+
     console.log('재고차감 후 재고 목록', stock.getter());
     OutputController.printReciept();
     // const inputPurchaseData = await this.inputPurchase();

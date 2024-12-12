@@ -1,1 +1,5 @@
-export default class Promotion {}
+export default class Promotion {
+  constructor() {
+    this.promotion = promotion;
+  }
+}

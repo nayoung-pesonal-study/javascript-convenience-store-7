@@ -1,17 +1,25 @@
+import { DateTimes } from '@woowacourse/mission-utils';
 import { makePerfectProductData } from '../utils/loadProduct.js';
+import { makePerfectPromotionData } from '../utils/loadPromotion.js';
 import { Parser } from '../utils/Parser.js';
 import { Validator } from '../utils/Validator.js';
 
 class Stock {
   #stock;
+  #promotion;
   // stock<product{ name: '콜라', price: 1000, quantity: 10, promotion: '탄산2+1' }>
 
   async initStock() {
     this.#stock = await makePerfectProductData();
+    this.#promotion = await makePerfectPromotionData();
   }
 
   getter() {
     return this.#stock;
+  }
+
+  getterPromotion() {
+    return this.#promotion;
   }
 
   async messageStockState() {
@@ -51,16 +59,13 @@ class Stock {
           price: product.price,
           quantity: product.quantity,
           promotion: product.promotion,
+          bonus: 0,
         };
       });
     findProductInStock.forEach((product) => {
-      if (product.promotion !== 'null') {
-        const subtractPromotionQuantity = Math.min(willBuy, product.quantity);
-        product.quantity = subtractPromotionQuantity;
-        willBuy -= subtractPromotionQuantity;
-      }
-      if (willBuy > 0 && product.promotion === 'null')
-        product.quantity = willBuy;
+      const subtractPromotionQuantity = Math.min(willBuy, product.quantity);
+      product.quantity = subtractPromotionQuantity;
+      willBuy -= subtractPromotionQuantity;
     });
     return findProductInStock;
   }
@@ -81,6 +86,27 @@ class Stock {
         }
       });
     });
+  }
+
+  isPromotionPeriod(promotionName) {
+    if (promotionName === 'null') return false;
+    const isPromotion = this.#promotion.find(
+      (promotion) => promotion.name === promotionName,
+    );
+    if (
+      DateTimes.now() >= isPromotion.start_date &&
+      DateTimes.now() <= isPromotion.end_date
+    )
+      return true;
+    return false;
+  }
+
+  returnPromotionAmount(promotionName, amount) {
+    const isPromotion = this.#promotion.find(
+      (promotion) => promotion.name.trim() === promotionName.trim(),
+    );
+    console.log('isPromotion', isPromotion);
+    return Math.floor(amount / (isPromotion.get + isPromotion.buy));
   }
 }
 

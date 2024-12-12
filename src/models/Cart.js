@@ -34,8 +34,20 @@ class Cart {
     );
   }
 
+  // 보너스 계산도 다 하고난 뒤 최종 장바구니를 재고에서 차감하는 로직.
   subtractPurchaseListInStock(stock) {
     stock.subtractStock(this.#purchaseList);
+  }
+
+  calculatePurchaseListBonus(stock) {
+    this.#purchaseList.forEach((product) => {
+      if (stock.isPromotionPeriod(product.promotion)) {
+        product.bonus += stock.returnPromotionAmount(
+          product.promotion,
+          product.quantity,
+        );
+      }
+    });
   }
 
   calculateTotalPayment() {
