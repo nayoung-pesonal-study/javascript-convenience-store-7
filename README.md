@@ -1,5 +1,7 @@
 # javascript-convenience-store-precourse
 
+와 대충 기본기능 통과까지 7시간 35분 걸렸다...;;
+
 # 기능 목록 정리
 
 ## 입력
